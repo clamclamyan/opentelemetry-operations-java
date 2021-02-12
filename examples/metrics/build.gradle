@@ -49,4 +49,5 @@ dependencies {
 	compile(libraries.google_cloud_monitoring)
 	compile project(':exporter-metrics')
 	compile("org.slf4j:slf4j-log4j12:1.7.30")
+	runtimeOnly project(':detector-resources')
 }

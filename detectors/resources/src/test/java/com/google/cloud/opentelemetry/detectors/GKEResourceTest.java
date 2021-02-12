@@ -58,4 +58,47 @@ public class GKEResourceTest {
 
     assertTrue(attr.isEmpty());
   }
+
+  @Test
+  public void testGKEResourceWithGKEAttributesSucceeds() {
+    stubEndpoint("/project/project-id", "GCE-pid");
+    stubEndpoint("/instance/zone", "country-region-zone");
+    stubEndpoint("/instance/id", "GCE-instance-id");
+    stubEndpoint("/instance/name", "GCE-instance-name");
+    stubEndpoint("/instance/machine-type", "GCE-instance-type");
+    stubEndpoint("/instance/attributes/cluster-name", "GKE-cluster-name");
+
+    Map<String, String> map = new HashMap<>();
+    map.put("KUBERNETES_SERVICE_HOST", "GKE-testHost");
+    map.put("NAMESPACE", "GKE-testNameSpace");
+    map.put("HOSTNAME", "GKE-testHostName");
+    map.put("CONTAINER_NAME", "GKE-testContainerName");
+
+    GKEResource testResource = new GKEResource(metadataConfig, new EnvVarMock(map));
+    Attributes attr = testResource.getAttributes();
+
+    Map<AttributeKey<String>, String> expectedAttributes =
+        Stream.of(
+                new Object[][] {
+                  {SemanticAttributes.CLOUD_PROVIDER, "gcp"},
+                  {SemanticAttributes.CLOUD_ACCOUNT_ID, "GCE-pid"},
+                  {SemanticAttributes.CLOUD_ZONE, "country-region-zone"},
+                  {SemanticAttributes.CLOUD_REGION, "country-region"},
+                  {SemanticAttributes.HOST_ID, "GCE-instance-id"},
+                  {SemanticAttributes.HOST_NAME, "GCE-instance-name"},
+                  {SemanticAttributes.HOST_TYPE, "GCE-instance-type"},
+                  {SemanticAttributes.K8S_CLUSTER_NAME, "GKE-cluster-name"},
+                  {SemanticAttributes.K8S_NAMESPACE_NAME, "GKE-testNameSpace"},
+                  {SemanticAttributes.K8S_POD_NAME, "GKE-testHostName"},
+                  {SemanticAttributes.K8S_CONTAINER_NAME, "GKE-testContainerName"}
+                })
+            .collect(
+                Collectors.toMap(data -> (AttributeKey<String>) data[0], data -> (String) data[1]));
+
+    assertEquals(11, attr.size());
+    attr.forEach(
+        (key, value) -> {
+          assertEquals(expectedAttributes.get(key), value);
+        });
+  }
 }

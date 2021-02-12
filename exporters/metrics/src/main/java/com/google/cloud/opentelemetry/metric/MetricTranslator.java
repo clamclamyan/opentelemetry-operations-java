@@ -78,7 +78,7 @@ public class MetricTranslator {
               new Object[][] {
                 {"project_id", SemanticAttributes.CLOUD_ACCOUNT_ID},
                 {"cluster_name", SemanticAttributes.K8S_CLUSTER_NAME},
-                {"namespace_id", SemanticAttributes.K8S_CONTAINER_NAME},
+                {"namespace_id", SemanticAttributes.K8S_NAMESPACE_NAME},
                 {"instance_id", SemanticAttributes.HOST_ID},
                 {"pod_id", SemanticAttributes.K8S_POD_NAME},
                 {"container_name", SemanticAttributes.K8S_CONTAINER_NAME},
