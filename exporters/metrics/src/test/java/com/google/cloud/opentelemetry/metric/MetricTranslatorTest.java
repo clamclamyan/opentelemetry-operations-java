@@ -130,7 +130,7 @@ public class MetricTranslatorTest {
     Map<AttributeKey<String>, String> testAttributes =
         Stream.of(
                 new Object[][] {
-                  {SemanticAttributes.CLOUD_PROVIDER, "gcp"},
+                  {SemanticAttributes.CLOUD_PROVIDER, SemanticAttributes.CloudProviderValues.GCP},
                   {SemanticAttributes.CLOUD_ACCOUNT_ID, "GCE-pid"},
                   {SemanticAttributes.CLOUD_ZONE, "country-region-zone"},
                   {SemanticAttributes.CLOUD_REGION, "country-region"},
@@ -174,7 +174,7 @@ public class MetricTranslatorTest {
     Map<AttributeKey<String>, String> testAttributes =
         Stream.of(
                 new Object[][] {
-                  {SemanticAttributes.CLOUD_PROVIDER, "gcp"},
+                  {SemanticAttributes.CLOUD_PROVIDER, SemanticAttributes.CloudProviderValues.GCP},
                   {SemanticAttributes.CLOUD_ACCOUNT_ID, "GCE-pid"},
                   {SemanticAttributes.CLOUD_ZONE, "country-region-zone"},
                   {SemanticAttributes.CLOUD_REGION, "country-region"},
